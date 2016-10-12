@@ -263,6 +263,8 @@ module.directive("tgPublicRegisterMessage", ["$tgConfig", "$tgNavUrls", "$routeP
 
 LoginDirective = ($auth, $confirm, $location, $config, $routeParams, $navUrls, $events, $translate, $window) ->
     link = ($scope, $el, $attrs) ->
+        $scope.passwordLoginEnabled = $config.get("passwordLoginEnabled")
+
         form = new checksley.Form($el.find("form.login-form"))
 
         if $routeParams['next'] and $routeParams['next'] != $navUrls.resolve("login")
@@ -481,6 +483,7 @@ InvitationDirective = ($auth, $confirm, $location, $params, $navUrls, $analytics
         promise.then (invitation) ->
             $scope.invitation = invitation
             $scope.publicRegisterEnabled = config.get("publicRegisterEnabled")
+            $scope.passwordLoginEnabled = config.get("passwordLoginEnabled")
 
         promise.then null, (response) ->
             $location.path($navUrls.resolve("login"))
