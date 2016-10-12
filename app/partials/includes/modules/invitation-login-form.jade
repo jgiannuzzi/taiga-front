@@ -1,7 +1,9 @@
 form.login-form
     p.form-header(translate="LOGIN_COMMON.HEADER")
 
-    fieldset
+    fieldset(
+        ng-if="passwordLoginEnabled"
+    )
         input(
             type="text"
             autocorrect="off" 
@@ -12,7 +14,9 @@ form.login-form
             placeholder="{{'LOGIN_COMMON.PLACEHOLDER_AUTH_NAME' | translate}}"
         )
 
-    fieldset.login-password
+    fieldset.login-password(
+        ng-if="passwordLoginEnabled"
+    )
         input(
             type="password"
             name="password"
@@ -29,7 +33,9 @@ form.login-form
             translate="LOGIN_COMMON.LINK_FORGOT_PASSWORD"
         )
 
-    fieldset
+    fieldset(
+        ng-if="passwordLoginEnabled"
+    )
         a.button-login.button-blackish.submit-button(
             type="submit"
             title="{{'LOGIN_COMMON.ACTION_ENTER' | translate}}"

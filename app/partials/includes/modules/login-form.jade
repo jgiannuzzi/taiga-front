@@ -1,6 +1,8 @@
 .login-form-container(tg-login)
     form.login-form
-        fieldset
+        fieldset(
+            ng-if="passwordLoginEnabled"
+        )
             input(
                 type="text"
                 autocorrect="off"
@@ -12,7 +14,9 @@
                 placeholder="{{'LOGIN_COMMON.PLACEHOLDER_AUTH_NAME' | translate}}"
             )
 
-        fieldset.login-password
+        fieldset.login-password(
+            ng-if="passwordLoginEnabled"
+        )
             input(
                 type="password"
                 name="password"
@@ -31,7 +35,9 @@
             
             tg-capslock
 
-        fieldset
+        fieldset(
+            ng-if="passwordLoginEnabled"
+        )
             button.button-green.submit-button(
                 type="submit"
                 title="{{'LOGIN_COMMON.ACTION_SIGN_IN' | translate}}"

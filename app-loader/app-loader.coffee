@@ -10,6 +10,7 @@ window.taigaConfig = {
     "defaultLanguage": "en",
     "themes": ["taiga", "material-design", "high-contrast"],
     "defaultTheme": "taiga",
+    "passwordLoginEnabled": true,
     "publicRegisterEnabled": true,
     "feedbackEnabled": true,
     "privacyPolicyUrl": null,
