@@ -434,6 +434,15 @@ configure = ($routeProvider, $locationProvider, $httpProvider, $provide, $tgEven
             controller: "LoginPage",
         }
     )
+    $routeProvider.when("/logout",
+        {
+            templateUrl: "auth/logout.html",
+            title: "META.PAGE_TITLE",
+            description: "META.PAGE_DESCRIPTION",
+            disableHeader: true,
+            controller: "LogoutPage",
+        }
+    )
     $routeProvider.when("/register",
         {
             templateUrl: "auth/register.html",

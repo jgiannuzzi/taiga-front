@@ -649,3 +649,32 @@ CancelAccountDirective = ($repo, $model, $auth, $confirm, $location, $params, $n
 
 module.directive("tgCancelAccount", ["$tgRepo", "$tgModel", "$tgAuth", "$tgConfirm", "$tgLocation",
                                      "$routeParams","$tgNavUrls", CancelAccountDirective])
+
+
+#############################################################################
+## Logout Page
+#############################################################################
+
+class LogoutPage
+    @.$inject = [
+        '$tgAuth',
+        '$location',
+        '$tgNavUrls',
+        '$routeParams',
+        '$window'
+    ]
+
+    constructor: ($auth, $location, $navUrls, $routeParams, $window) ->
+        $auth.logout()
+
+        url = $navUrls.resolve("home")
+        if $routeParams['next'] and $routeParams['next'] != $navUrls.resolve("logout")
+            url = decodeURIComponent($routeParams['next'])
+            $location.search('next', null)
+
+        if url.indexOf('http') == 0
+            $window.location.href = url
+        else
+            $location.url(url)
+
+module.controller('LogoutPage', LogoutPage)
