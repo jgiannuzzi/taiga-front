@@ -520,33 +520,34 @@ InvitationDirective = ($auth, $confirm, $location, $params, $navUrls, $analytics
         $el.on "click", ".button-login", submitLogin
 
         # Register form
-        $scope.dataRegister = {token: token}
-        registerForm = $el.find("form.register-form").checksley({onlyOneErrorElement: true})
+        if $scope.publicRegisterEnabled
+            $scope.dataRegister = {token: token}
+            registerForm = $el.find("form.register-form").checksley({onlyOneErrorElement: true})
 
-        onSuccessSubmitRegister = (response) ->
-            $analytics.trackEvent("auth", "invitationAccept", "invitation accept with new user", 1)
-            $location.path($navUrls.resolve("project", {project: $scope.invitation.project_slug}))
-            $confirm.notify("success", "You've successfully joined this project",
-                                       "Welcome to #{_.escape($scope.invitation.project_name)}")
+            onSuccessSubmitRegister = (response) ->
+                $analytics.trackEvent("auth", "invitationAccept", "invitation accept with new user", 1)
+                $location.path($navUrls.resolve("project", {project: $scope.invitation.project_slug}))
+                $confirm.notify("success", "You've successfully joined this project",
+                                           "Welcome to #{_.escape($scope.invitation.project_name)}")
 
-        onErrorSubmitRegister = (response) ->
-            if response.data._error_message
-                text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message})
-                $confirm.notify("light-error", text)
+            onErrorSubmitRegister = (response) ->
+                if response.data._error_message
+                    text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message})
+                    $confirm.notify("light-error", text)
 
-            registerForm.setErrors(response.data)
+                registerForm.setErrors(response.data)
 
-        submitRegister = debounce 2000, (event) =>
-            event.preventDefault()
+            submitRegister = debounce 2000, (event) =>
+                event.preventDefault()
 
-            if not registerForm.validate()
-                return
+                if not registerForm.validate()
+                    return
 
-            promise = $auth.acceptInvitiationWithNewUser($scope.dataRegister)
-            promise.then(onSuccessSubmitRegister, onErrorSubmitRegister)
+                promise = $auth.acceptInvitiationWithNewUser($scope.dataRegister)
+                promise.then(onSuccessSubmitRegister, onErrorSubmitRegister)
 
-        $el.on "submit", "form.register-form", submitRegister
-        $el.on "click", ".button-register", submitRegister
+            $el.on "submit", "form.register-form", submitRegister
+            $el.on "click", ".button-register", submitRegister
 
         $scope.$on "$destroy", ->
             $el.off()
